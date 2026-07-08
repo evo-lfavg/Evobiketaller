@@ -3,10 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventario de Refacciones</title>
+    <title>Evobike - Control de Refacciones</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; }
+        .container { max-width: 400px; margin: 0 auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; margin-top: 0; }
+        label { font-weight: bold; display: block; margin-top: 15px; color: #555; }
+        input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 16px; }
+        button { width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; margin-top: 25px; cursor: pointer; transition: 0.3s; }
+        button:hover { background-color: #218838; }
+        #mensaje { text-align: center; margin-top: 15px; font-weight: bold; min-height: 20px; }
+    </style>
 </head>
 <body>
-    <h1>Sistema de Recepción e Inventario</h1>
-    <p>La página web está en línea y funcionando 24/7.</p>
+
+    <div class="container">
+        <h2>Registro de Pedidos</h2>
+        
+        <form id="formularioPedido">
+            <label for="modelo">Modelo:</label>
+            <select id="modelo">
+                <option value="AGUILA">ÁGUILA</option>
+                <!-- Aquí iremos agregando los demás modelos -->
+            </select>
+
+            <label for="pieza">Refacción a pedir:</label>
+            <input type="text" id="pieza" placeholder="Ej. TARJETA HALL" required>
+
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad" min="1" value="1" required>
+
+            <button type="button" onclick="hacerPedido()">Registrar en Inventario</button>
+        </form>
+
+        <p id="mensaje"></p>
+    </div>
+
+    <script>
+        function hacerPedido() {
+            var modelo = document.getElementById('modelo').value;
+            var pieza = document.getElementById('pieza').value.toUpperCase();
+            var cantidad = document.getElementById('cantidad').value;
+            var mensaje = document.getElementById('mensaje');
+
+            if(pieza === "") {
+                mensaje.style.color = "red";
+                mensaje.innerText = "Por favor, escribe el nombre de la pieza.";
+                return;
+            }
+
+            mensaje.style.color = "blue";
+            mensaje.innerText = "Simulando envío... (Falta conectar servidor)";
+            
+            // Aquí pegaremos la URL secreta de Google Sheets en el siguiente paso
+            console.log("Pedido listo para enviar:", modelo, pieza, cantidad);
+        }
+    </script>
+
 </body>
 </html>
