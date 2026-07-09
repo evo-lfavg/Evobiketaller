@@ -40,7 +40,7 @@
     </div>
 
     <script>
-        function hacerPedido() {
+       function hacerPedido() {
             var modelo = document.getElementById('modelo').value;
             var pieza = document.getElementById('pieza').value.toUpperCase();
             var cantidad = document.getElementById('cantidad').value;
@@ -53,10 +53,37 @@
             }
 
             mensaje.style.color = "blue";
-            mensaje.innerText = "Simulando envío... (Falta conectar servidor)";
-            
-            // Aquí pegaremos la URL secreta de Google Sheets en el siguiente paso
-            console.log("Pedido listo para enviar:", modelo, pieza, cantidad);
+            mensaje.innerText = "Enviando datos a la base de datos...";
+
+            // PEGA TU URL DE GOOGLE AQUÍ ABAJO, ENTRE LAS COMILLAS
+            var urlGoogleScript = "TU_URL_DE_APPS_SCRIPT_AQUI";
+
+            var payload = {
+                modelo: modelo,
+                pieza: pieza,
+                cantidad: cantidad
+            };
+
+            fetch(urlGoogleScript, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.estado === "Éxito") {
+                    mensaje.style.color = "green";
+                    mensaje.innerText = "¡Pedido registrado exitosamente!";
+                    document.getElementById('pieza').value = ""; 
+                    document.getElementById('cantidad').value = "1";
+                } else {
+                    mensaje.style.color = "red";
+                    mensaje.innerText = "Error del servidor: " + data.mensaje;
+                }
+            })
+            .catch(error => {
+                mensaje.style.color = "red";
+                mensaje.innerText = "Error de conexión de red.";
+            });
         }
     </script>
 
