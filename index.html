@@ -24,11 +24,22 @@
             <label for="modelo">Modelo:</label>
             <select id="modelo">
                 <option value="AGUILA">ÁGUILA</option>
-                <!-- Aquí iremos agregando los demás modelos -->
             </select>
 
             <label for="pieza">Refacción a pedir:</label>
-            <input type="text" id="pieza" placeholder="Ej. TARJETA HALL" required>
+            <!-- Aquí agregamos el list="opciones" para conectar con el menú desplegable -->
+            <input type="text" id="pieza" list="opcionesRefacciones" placeholder="Escribe o selecciona..." required>
+            
+            <!-- Esta es la lista de sugerencias. Puedes agregar más líneas <option> después -->
+            <datalist id="opcionesRefacciones">
+                <option value="MOTOR">
+                <option value="TARJETA HALL">
+                <option value="TAPA EXTRENA MOTOR">
+                <option value="LLANTA DELANTERA">
+                <option value="SOPORTE DE COLA DE PATO">
+                <option value="FACIA">
+                <option value="DISCO DE FRENO">
+            </datalist>
 
             <label for="cantidad">Cantidad:</label>
             <input type="number" id="cantidad" min="1" value="1" required>
@@ -48,7 +59,7 @@
 
             if(pieza === "") {
                 mensaje.style.color = "red";
-                mensaje.innerText = "Por favor, escribe el nombre de la pieza.";
+                mensaje.innerText = "Por favor, selecciona o escribe el nombre de la pieza.";
                 return;
             }
 
@@ -56,20 +67,17 @@
             mensaje.innerText = "Enviando datos a la base de datos...";
 
             // PEGA TU URL DE GOOGLE AQUÍ ABAJO, ENTRE LAS COMILLAS
-            // Asegúrate de usar la tuya que termina en /exec y no la de ejemplo
             var urlGoogleScript = "https://script.google.com/macros/s/AKfycb.../exec";
 
-            // Estructura reparada del paquete de datos
             var payload = {
                 modelo: modelo,
                 pieza: pieza,
                 cantidad: cantidad
             };
 
-            // Aquí ocurre la magia con reglas de seguridad relajadas
             fetch(urlGoogleScript, {
                 method: 'POST',
-                redirect: 'follow', // Le dice al navegador que siga la redirección de Google
+                redirect: 'follow', 
                 headers: {
                     "Content-Type": "text/plain;charset=utf-8",
                 },
