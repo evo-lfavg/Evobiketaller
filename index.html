@@ -56,10 +56,17 @@
             mensaje.innerText = "Enviando datos a la base de datos...";
 
             // PEGA TU URL DE GOOGLE AQUÍ ABAJO, ENTRE LAS COMILLAS
-           var urlGoogleScript = "https://script.google.com/macros/s/AKfycb.../exec";
+            // Asegúrate de usar la tuya que termina en /exec y no la de ejemplo
+            var urlGoogleScript = "https://script.google.com/macros/s/AKfycb.../exec";
 
+            // Estructura reparada del paquete de datos
             var payload = {
-        // Aquí ocurre la magia con reglas de seguridad relajadas
+                modelo: modelo,
+                pieza: pieza,
+                cantidad: cantidad
+            };
+
+            // Aquí ocurre la magia con reglas de seguridad relajadas
             fetch(urlGoogleScript, {
                 method: 'POST',
                 redirect: 'follow', // Le dice al navegador que siga la redirección de Google
@@ -83,7 +90,7 @@
             .catch(error => {
                 mensaje.style.color = "red";
                 mensaje.innerText = "Error de conexión de red.";
-                console.error(error); // Esto nos ayudará a ver el error real si falla
+                console.error(error); 
             });
         }
     </script>
