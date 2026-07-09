@@ -59,13 +59,13 @@
            var urlGoogleScript = "https://script.google.com/macros/s/AKfycb.../exec";
 
             var payload = {
-                modelo: modelo,
-                pieza: pieza,
-                cantidad: cantidad
-            };
-
+        // Aquí ocurre la magia con reglas de seguridad relajadas
             fetch(urlGoogleScript, {
                 method: 'POST',
+                redirect: 'follow', // Le dice al navegador que siga la redirección de Google
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8",
+                },
                 body: JSON.stringify(payload)
             })
             .then(response => response.json())
@@ -83,6 +83,7 @@
             .catch(error => {
                 mensaje.style.color = "red";
                 mensaje.innerText = "Error de conexión de red.";
+                console.error(error); // Esto nos ayudará a ver el error real si falla
             });
         }
     </script>
